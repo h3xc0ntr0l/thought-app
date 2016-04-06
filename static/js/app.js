@@ -9,7 +9,16 @@ function($scope, ThoughtService){
 	$scope.title = "Thought App";
 
 	$scope.thought = {}; //just so we have this object at the outset.
-	ThoughtService.getThoughts(); // need to chain the command with a .then(err handler, success handler, other handler) etc
+	// need to chain the command with a .then(err handler, success handler, other handler) etc
+	ThoughtService.getThoughts().then(function(response){
+		if (response.message){
+			$scope.message = response.message;
+		} else if (response.thoughts){
+			$scope.thoughts = response.thoughts;
+		} else {
+			$scope.message = "Oops! Something went wrong!";
+		}
+	});
 
 	$scope.create = function(){
 		ThoughtService.makeThought($scope.thought);
