@@ -3,11 +3,17 @@ angular.module('app', []).controller('HomeCtrl', [
 'ThoughtService',
 function($scope, ThoughtService){
 
-	$scope.thought = {};
+	//this is all just scaffolding!!
+
+
+	$scope.title = "Thought App";
+
+	$scope.thought = {}; //just so we have this object at the outset.
 	ThoughtService.getThoughts(); // need to chain the command with a .then(err handler, success handler, other handler) etc
 
-	$scope.create = ThoughtService.makeThought($scope.thought);
-
+	$scope.create = function(){
+		ThoughtService.makeThought($scope.thought);
+	}
 
 
 
@@ -15,11 +21,11 @@ function($scope, ThoughtService){
 '$http',
 function($http){
 
-	function getThoughts(){
+	this.getThoughts = function(){
 		return $http.get('/api/thoughts');
 	}
 
-	function makeThought(thought){
+	this.makeThought = function(thought){
 		return $http.post('/api/thoughts');
 	}
 
